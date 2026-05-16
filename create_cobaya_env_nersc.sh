@@ -9,9 +9,8 @@ module load python
 if conda env list | awk '{print $1}' | grep -qx "cobaya"; then
     conda env remove -n cobaya -y
 fi
-conda create --name cobaya --clone base -y
-source activate cobaya
-MPICC="cc -shared" python -m pip install --no-cache-dir --no-binary=mpi4py mpi4py
+conda create --name cobaya --clone nersc-mpi4py -y
+conda activate cobaya
 python -m ipykernel install --user --name cobaya --display-name cobaya
 python -m pip install cobaya candl-like
 cobaya-install cosmo -p $PACKDIR
