@@ -1,4 +1,4 @@
-To reproduce the figure:
+To reproduce the figures:
 
 ```
 chmod +x create_cobaya_env_nersc.sh
@@ -9,6 +9,8 @@ conda activate cobaya
 rm chains/*lock*
 export COBAYA_USE_FILE_LOCKING=false
 export OMP_NUM_THREADS=4
-srun -N 1 -n 32 -c 4 python run_tau_profile.py
-python plot_tau_profile.py
+srun -N 1 -n 32 -c 4 python run_tau_profile.py cmb2pt_lite
+srun -N 1 -n 32 -c 4 python run_tau_profile.py cmb2pt_lite_alens
+python plot_tau_profile.py cmb2pt_lite
+python plot_tau_profile.py cmb2pt_lite_alens
 ```

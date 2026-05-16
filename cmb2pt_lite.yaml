@@ -13,6 +13,7 @@ likelihood:
     data_set_file: candl_data.ACT_DR6_TTTEEE
     data_selection:
       - "ell<1000 remove"
+      - "ell>4000 remove"
   spt_3g_d1_lite:
     class: candl.interface.CandlCobayaLikelihood
     data_set_file: spt_candl_data.SPT3G_D1_TnE
