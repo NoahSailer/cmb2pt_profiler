@@ -1,0 +1,152 @@
+theory:
+  camb: null
+likelihood:
+  planck_NPIPE_highl_CamSpec.TTTEEE:
+    dataset_params:
+      use_cl: 143x143 217x217 143x217 TE EE
+      use_range:
+        143x143: 30-1000
+        217x217: 500-1000
+        143x217: 500-1000
+        TE: 30-1000
+        EE: 30-1000
+  act_dr6_lite:
+    class: candl.interface.CandlCobayaLikelihood
+    data_set_file: candl_data.ACT_DR6_TTTEEE
+    data_selection:
+    - ell<1000 remove
+  spt_3g_d1_lite:
+    class: candl.interface.CandlCobayaLikelihood
+    data_set_file: spt_candl_data.SPT3G_D1_TnE
+    variant: lite
+prior:
+  cal_dip_prior: 'lambda A_act: stats.norm.logpdf(A_act, loc = 1.0, scale = 0.003)'
+  poleff_prior: 'lambda P_act: stats.norm.logpdf(P_act, loc=1.0, scale=0.01)'
+  gaussian_Tcal: 'lambda Tcal: stats.norm.logpdf(Tcal, loc=1.0, scale=0.0036)'
+params:
+  ombh2:
+    prior:
+      min: 0.017
+      max: 0.027
+    ref:
+      dist: norm
+      loc: 0.02237
+      scale: 0.0003
+    proposal: 0.00015
+    latex: \Omega_\mathrm{b}h^2
+  omch2:
+    prior:
+      min: 0.09
+      max: 0.15
+    ref:
+      dist: norm
+      loc: 0.12
+      scale: 0.0024
+    proposal: 0.0012
+    latex: \Omega_\mathrm{c}h^2
+  cosmomc_theta:
+    prior:
+      min: 0.01038
+      max: 0.01044
+    ref:
+      dist: norm
+      loc: 0.0104092
+      scale: 6.2e-06
+    proposal: 3.1e-06
+    latex: \theta_\mathrm{MC}
+  logA:
+    prior:
+      min: 2.6
+      max: 3.5
+    ref:
+      dist: norm
+      loc: 3.044
+      scale: 0.028
+    proposal: 0.014
+    latex: \log(10^{10} A_\mathrm{s})
+  ns:
+    prior:
+      min: 0.9
+      max: 1.1
+    ref:
+      dist: norm
+      loc: 0.9649
+      scale: 0.0084
+    proposal: 0.0042
+    latex: n_\mathrm{s}
+  tau:
+    value: 0.11
+    latex: \tau_\mathrm{reio}
+  mnu:
+    value: 0.06
+    latex: \Sigma m_\nu
+  H0:
+    latex: H_0
+  sigma8:
+    latex: \sigma_8
+  YHe:
+    latex: Y_\mathrm{He}
+    derived: true
+  zrei:
+    latex: z_\mathrm{reio}
+    derived: true
+  zstar:
+    latex: z_\star
+    derived: true
+  rstar:
+    latex: r_{s,\star}
+    derived: true
+  zdrag:
+    latex: z_d
+    derived: true
+  rdrag:
+    latex: r_d
+    derived: true
+  omnuh2:
+    latex: \Omega_\nuh^2
+    derived: true
+  OmegaM:
+    derived: 'lambda omch2,ombh2,omnuh2,H0: (omch2+ombh2+omnuh2)/(H0/100)**2'
+    latex: \Omega_\mathrm{m}
+  H0rd:
+    derived: 'lambda H0, rdrag: H0*rdrag/100'
+    latex: H_0r_d
+  S8:
+    derived: 'lambda OmegaM, sigma8: sigma8*(OmegaM/0.3)**0.5'
+    latex: S_8
+  As:
+    value: 'lambda logA: 1e-10*np.exp(logA)'
+    latex: A_s
+    derived: true
+  A_act:
+    latex: A_{\rm act}
+    prior:
+      max: 1.2
+      min: 0.8
+    ref: 1.0
+  P_act:
+    prior:
+      min: 0.9
+      max: 1.1
+    ref:
+      dist: norm
+      loc: 1.0
+      scale: 0.01
+    proposal: 0.01
+    latex: P_{\rm act}
+  Tcal:
+    latex: T_{\rm cal}
+    prior:
+      max: 1.2
+      min: 0.8
+    ref: 1.0
+  Ecal:
+    latex: E_{\rm cal}
+    prior:
+      max: 1.2
+      min: 0.8
+    ref: 1.0
+sampler:
+  minimize: null
+output: cmb2pt-lite_tau=0.11
+minimize: true
